@@ -5,12 +5,13 @@ inputs:
   kubeflow_url:
     description: The endpoint where your Kubeflow UI is running. 
     required: true
-  workflow_yaml_path:
-    description: The full path name including the filename of the YAML file that describes the workflow you want to run on Argo.  This should be relative to the root of the GitHub repository where the Action is triggered.
-    require: true
   client_id:
     description: The IAP client id, which was specified when the kubeflow deployment where setup using IAP.
     require: true
+  pipeline_code_path:
+    description: The full path name including the filename of the python file that describes the pipeline you want to run on Kubeflow.  This should be relative to the root of the GitHub repository where the Action is triggered.
+    require: true
+  
 outputs:
   WORKFLOW_URL:
     description: URL that is a link to pipeline in Kubeflow

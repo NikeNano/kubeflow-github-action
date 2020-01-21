@@ -1,0 +1,26 @@
+name: Compile and Deploy
+on: [push]
+
+# Set environmental variables
+env: 
+  ENCODED_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GKE_KEY }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout files in repo
+      uses: actions/checkout@master
+    
+    - name: Set the needed secrets for Kubeflow, assume it is deployed on GCP
+      run: |
+        echo "${ENCODED_GOOGLE_APPLICATION_CREDENTIALS}" | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
+
+    - name: Submit Kubeflow pipeline
+      id: argo
+      uses: NikeNano/kubeflow-github-action@master
+      with:
+        kubeflow_url: ${{ secrets.KUBEFLOW_URL }}
+        client_id: ${{ secrets.CLIENT_ID }}
+        pipeline_code_path: "examples/pipeline.py"
+        pipeline_function_name: "example_pipeline"
