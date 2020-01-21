@@ -56,13 +56,8 @@ def main():
     pipeline_function = load_function(pipeline_function_name=os.environ["pipeline_function_name"]
                                       full_path_to_pipeline=os.environ["pipeline_code_path"])
     pipeline_name_zip = pipeline_compile(pipeline_function_name=pipeline_function)
-    upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
+    client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
                     pipeline_name=os.environ["pipeline_function_name"])
-    if os.environ["run_pipeline"]: 
-        client.run_pipeline(experiment_id=experiment_id
-        , job_name=job_name + "_" + str(ts)
-        , pipeline_id=pipeline_id
-        , params={})
 
 
 if __name__ == "__main__": 
