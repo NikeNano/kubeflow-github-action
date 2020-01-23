@@ -4,6 +4,7 @@ on: [push]
 # Set environmental variables
 env: 
   ENCODED_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GKE_KEY }}
+  GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcloud-sa.json
 
 jobs:
   build:
@@ -22,5 +23,5 @@ jobs:
       with:
         kubeflow_url: ${{ secrets.KUBEFLOW_URL }}
         client_id: ${{ secrets.CLIENT_ID }}
-        pipeline_code_path: "examples/pipeline.py"
-        pipeline_function_name: "example_pipeline"
+        pipeline_code_path: "example_pipeline.py"
+        pipeline_function_name: "flipcoin_pipeline"
