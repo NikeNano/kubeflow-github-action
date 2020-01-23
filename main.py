@@ -21,7 +21,7 @@ def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> o
     return pipeline_func
 
 
-def pipeline_compile(pipeline_function_name :object) -> str: 
+def pipeline_compile(pipeline_function :object) -> str: 
     """Function to compile pipeline. The pipeline is compiled to a zip file. 
     
     Arguments:
@@ -30,8 +30,8 @@ def pipeline_compile(pipeline_function_name :object) -> str:
     Returns:
         str -- The name of the compiled kubeflow pipeline
     """
-    pipeline_name_zip = pipeline_func.__name__ + ".zip"
-    compiler.Compiler().compile(pipeline_func, pipeline_name_zip)
+    pipeline_name_zip = pipeline_function.__name__ + ".zip"
+    compiler.Compiler().compile(pipeline_function, pipeline_name_zip)
     return pipeline_name_zip
 
 
@@ -47,15 +47,15 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str):
         client_id=os.environ["client_id"]
         )
     client.upload_pipeline(
-        pipeline_package_path=pipeline_filename, 
+        pipeline_package_path=pipeline_name_zip, 
         pipeline_name=pipeline_name)
     return client
 
 
 def main():
-    pipeline_function = load_function(pipeline_function_name=os.environ["pipeline_function_name"]
+    pipeline_function = load_function(pipeline_function_name=os.environ["pipeline_function_name"], 
                                       full_path_to_pipeline=os.environ["pipeline_code_path"])
-    pipeline_name_zip = pipeline_compile(pipeline_function_name=pipeline_function)
+    pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
                     pipeline_name=os.environ["pipeline_function_name"])
 
