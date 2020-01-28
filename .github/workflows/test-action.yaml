@@ -17,9 +17,10 @@ jobs:
       run: |
         echo "${ENCODED_GOOGLE_APPLICATION_CREDENTIALS}" | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
 
-    - name: see all files:
+    - name: See all files
       run: |
         ls 
+        
     - name: Submit Kubeflow pipeline
       id: argo
       uses: NikeNano/kubeflow-github-action@master
