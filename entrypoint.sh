@@ -1,3 +1,9 @@
+#!/bin/bash
+
+#This file retrieves GKE credentials and submits an Argo Workflow on K8s
+
+set -e
+
 check_env "KUBEFLOW_URL"
 check_env "CLIENT_ID"
 check_env "PIPELINE_CODE_PATH"
