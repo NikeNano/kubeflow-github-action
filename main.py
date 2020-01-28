@@ -5,7 +5,6 @@ import click
 import importlib.util
 
 
-
 def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> object:
     """Function to load python function from filepath and filename
     
