@@ -2,7 +2,10 @@
 
 #This file retrieves GKE credentials and submits an Argo Workflow on K8s
 
-set -e
+export KUBEFLOW_URL=$0
+export CLIENT_ID=$1
+export PIPELINE_CODE_PATH=$2
+export PIPELINE_FUNCTION_NAME=$3
 
 function check_env() {
     if [ -z $(eval echo "\$$1") ]; then

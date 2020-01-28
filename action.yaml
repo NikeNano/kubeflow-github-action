@@ -23,5 +23,8 @@ branding:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  arg: 
-    - ${{ inputs.KUBEFLOW_URL }}
+  args:
+    - ${{ inputs.KUBEFLOW_URL}}
+    - ${{ inputs.CLIENT_ID}}
+    - ${{ inputs.PIPELINE_CODE_PATH}}
+    - ${{ inputs.PIPELINE_FUNCTION_NAME}}
