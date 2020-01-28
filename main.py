@@ -1,6 +1,7 @@
 import os
 import kfp
 import kfp.compiler as compiler
+import click
 import importlib.util
 
 def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> object:
@@ -35,7 +36,7 @@ def pipeline_compile(pipeline_function :object) -> str:
     return pipeline_name_zip
 
 
-def upload_pipeline(pipeline_name_zip :str, pipeline_name :str): 
+def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :str, client_id :str) : 
     """Function to upload pipeline to kubeflow. 
     
     Arguments:
@@ -43,21 +44,27 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str):
         pipeline_name {str} -- The name of the pipeline function. This will be the name in the kubeflow UI. 
     """
     client = kfp.Client(
-        host=os.environ["kubeflow_url"], 
-        client_id=os.environ["client_id"]
+        host=kubeflow_url, 
+        client_id=client_id
         )
     client.upload_pipeline(
         pipeline_package_path=pipeline_name_zip, 
         pipeline_name=pipeline_name)
     return client
 
-
-def main():
-    pipeline_function = load_function(pipeline_function_name=os.environ["pipeline_function_name"], 
-                                      full_path_to_pipeline=os.environ["pipeline_code_path"])
+@click.command()
+@click.option('-p', '--pipeline_function_name', required=True, type=str)
+@click.option('-c', '--pipeline_code_path', required=True, type=str)
+@click.option('-u','--kubeflow_url', required=True, type=str)
+@click.option('-i','--client_id', required=True, type=str)
+def main(pipeline_function_name:str, pipeline_code_path:str , kubeflow_url:str, client_id:str):
+    pipeline_function = load_function(pipeline_function_name=pipeline_function_name, 
+                                      full_path_to_pipeline=pipeline_code_path)
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
-                    pipeline_name=os.environ["pipeline_function_name"])
+                    pipeline_name=pipeline_function_name, 
+                    kubeflow_url=kubeflow_url,
+                    client_id=client_id)
 
 
 if __name__ == "__main__": 
