@@ -2,9 +2,6 @@ name: Compile and Deploy
 on: [push]
 
 # Set environmental variables
-env: 
-  ENCODED_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GKE_KEY }}
-  GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcloud-sa.json
 
 jobs:
   build:
@@ -27,6 +24,8 @@ jobs:
       uses: NikeNano/kubeflow-github-action@master
       with:
         KUBEFLOW_URL: ${{ secrets.KUBEFLOW_URL }}
+        ENCODED_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GKE_KEY }}
+        GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcloud-sa.json
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         PIPELINE_CODE_PATH: "example_pipeline.py"
         PIPELINE_FUNCTION_NAME: "flipcoin_pipeline"

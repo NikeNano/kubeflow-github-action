@@ -14,6 +14,12 @@ inputs:
   PIPELINE_FUNCTION_NAME:
     description: The name of the pipeline, this name will be the name of the pipeline in the Kubeflow UI.
     require: true
+  ENCODED_GOOGLE_APPLICATION_CREDENTIALS:
+    description: The base64 encoded google credentials
+    required: true
+    ENCODED_GOOGLE_APPLICATION_CREDENTIALS:
+    description: The path to the decoded google credentials
+    required: true
 outputs:
   WORKFLOW_URL:
     description: URL that is a link to pipeline in Kubeflow
@@ -28,3 +34,5 @@ runs:
     - ${{ inputs.CLIENT_ID }}
     - ${{ inputs.PIPELINE_CODE_PATH }}
     - ${{ inputs.PIPELINE_FUNCTION_NAME }}
+    - ${{ inputs.ENCODED_GOOGLE_APPLICATION_CREDENTIALS }}
+    - ${{ inputs.ENCODED_GOOGLE_APPLICATION_CREDENTIALS }}
