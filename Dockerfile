@@ -5,6 +5,8 @@ LABEL "com.github.actions.name"="Submit Kubeflow Pipeline From GitHub"
 LABEL "com.github.actions.icon"="upload-cloud"
 LABEL "com.github.actions.color"="purple"
 
+COPY . . 
+
 RUN  pip3 install -r requirements.txt
 
 ENTRYPOINT ["python3 main.py"]
