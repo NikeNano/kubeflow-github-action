@@ -48,7 +48,6 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :st
     client = kfp.Client(
         host=kubeflow_url, 
         client_id=client_id,
-        other
         )
     client.upload_pipeline(
         pipeline_package_path=pipeline_name_zip, 
