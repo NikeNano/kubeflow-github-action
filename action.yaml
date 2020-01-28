@@ -2,16 +2,16 @@ name: 'actions-kubeflow'
 description: Build, deploy and run a kubeflow pipeline
 author: Niklas Hansson
 inputs:
-  kubeflow_url:
+  KUBEFLOW_URL:
     description: The endpoint where your Kubeflow UI is running. 
     required: true
-  client_id:
+  CLIENT_ID:
     description: The IAP client id, which was specified when the kubeflow deployment where setup using IAP.
     require: true
-  pipeline_code_path:
+  PIPELINE_CODE_PATH:
     description: The full path name including the filename of the python file that describes the pipeline you want to run on Kubeflow.  This should be relative to the root of the GitHub repository where the Action is triggered.
     require: true
-  pipeline_function_name:
+  PIPELINE_FUNCTION_NAME:
     description: The name of the pipeline, this name will be the name of the pipeline in the Kubeflow UI.
     require: true
 outputs:
