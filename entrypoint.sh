@@ -4,6 +4,13 @@
 
 set -e
 
+function check_env() {
+    if [ -z $(eval echo "\$$1") ]; then
+        echo "Variable $1 not found.  Exiting..."
+        exit 1
+    fi
+}
+
 check_env "KUBEFLOW_URL"
 check_env "CLIENT_ID"
 check_env "PIPELINE_CODE_PATH"
