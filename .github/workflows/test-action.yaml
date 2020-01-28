@@ -20,7 +20,8 @@ jobs:
     - name: See all files
       run: |
         ls 
-        
+        printenv
+
     - name: Submit Kubeflow pipeline
       id: argo
       uses: NikeNano/kubeflow-github-action@master
