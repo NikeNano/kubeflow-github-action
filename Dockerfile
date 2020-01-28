@@ -6,6 +6,8 @@ LABEL "com.github.actions.color"="purple"
 
 COPY . . 
 
+ADD entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 RUN  pip install -r requirements.txt
 
