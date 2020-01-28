@@ -53,6 +53,7 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str):
 
 
 def main():
+    print(os.environ)
     pipeline_function = load_function(pipeline_function_name=os.environ["PIPELINE_FUNCTION_NAME"], 
                                       full_path_to_pipeline=os.environ["PIPELINE_CODE_PATH"])
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
