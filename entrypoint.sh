@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "${ENCODED_GOOGLE_APPLICATION_CREDENTIALS}" | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
+
+python  /main.py
