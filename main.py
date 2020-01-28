@@ -56,13 +56,13 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :st
 
 
 def main():
-    pipeline_function = load_function(pipeline_function_name=os.environ['PIPELINE_FUNCTION_NAME'], 
-                                      full_path_to_pipeline=os.environ['PIPELINE_CODE_PATH'])
+    pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
+                                      full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
-                    pipeline_name=os.environ['PIPELINE_FUNCTION_NAME'], 
-                    kubeflow_url=os.environ['KUBEFLOW_URL'],
-                    client_id=os.environ["CLIENT_ID"])
+                    pipeline_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
+                    kubeflow_url=os.environ['INPUT_KUBEFLOW_URL'],
+                    client_id=os.environ["INPUT_CLIENT_ID"])
 
 
 if __name__ == "__main__": 
