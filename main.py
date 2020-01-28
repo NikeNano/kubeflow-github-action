@@ -4,6 +4,8 @@ import kfp.compiler as compiler
 import click
 import importlib.util
 
+
+
 def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> object:
     """Function to load python function from filepath and filename
     
@@ -52,12 +54,12 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :st
         pipeline_name=pipeline_name)
     return client
 
-@click.command()
-@click.option('-p', '--pipeline_function_name', required=True, type=str)
-@click.option('-c', '--pipeline_code_path', required=True, type=str)
-@click.option('-u','--kubeflow_url', required=True, type=str)
-@click.option('-i','--client_id', required=True, type=str)
-def main(pipeline_function_name:str, pipeline_code_path:str , kubeflow_url:str, client_id:str):
+
+def main():
+    pipeline_function_name = os.getenv("KUBEFLOW_URL")
+    pipeline_code_path = os.getenv("CLIENT_ID")
+    kubeflow_url = os.getenv("PIPELINE_CODE_PATH")
+    client_id = os.getenv("PIPELINE_FUNCTION_NAME")
     pipeline_function = load_function(pipeline_function_name=pipeline_function_name, 
                                       full_path_to_pipeline=pipeline_code_path)
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
