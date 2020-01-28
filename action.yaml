@@ -2,7 +2,7 @@ name: 'actions-kubeflow'
 description: Build, deploy and run a kubeflow pipeline
 author: Niklas Hansson
 inputs:
-  kubeflow_url:
+  KUBEFLOW_URL:
     description: The endpoint where your Kubeflow UI is running. 
     required: true
   CLIENT_ID:
@@ -23,3 +23,5 @@ branding:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  arg: 
+    - ${{ inputs.KUBEFLOW_URL }}
