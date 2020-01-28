@@ -9,11 +9,8 @@ jobs:
     steps:
     - name: checkout files in repo
       uses: actions/checkout@master
-    
-    - name: Set the needed secrets for Kubeflow, assume it is deployed on GCP
-      run: |
-        echo "${ENCODED_GOOGLE_APPLICATION_CREDENTIALS}" | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
 
+      
     - name: See all files
       run: |
         ls 
