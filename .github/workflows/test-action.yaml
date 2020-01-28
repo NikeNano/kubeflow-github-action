@@ -21,7 +21,7 @@ jobs:
       id: argo
       uses: NikeNano/kubeflow-github-action@master
       with:
-        kubeflow_url: ${{ secrets.KUBEFLOW_URL }}
-        client_id: ${{ secrets.CLIENT_ID }}
-        pipeline_code_path: "example_pipeline.py"
-        pipeline_function_name: "flipcoin_pipeline"
+        KUBEFLOW_URL: ${{ secrets.KUBEFLOW_URL }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        PIPELINE_CODE_PATH: "example_pipeline.py"
+        PIPELINE_FUNCTION_NAME: "flipcoin_pipeline"
