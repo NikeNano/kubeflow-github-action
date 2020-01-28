@@ -2,7 +2,7 @@ name: 'actions-kubeflow'
 description: Build, deploy and run a kubeflow pipeline
 author: Niklas Hansson
 inputs:
-  KUBEFLOW_URL:
+  kubeflow_url:
     description: The endpoint where your Kubeflow UI is running. 
     required: true
   CLIENT_ID:
