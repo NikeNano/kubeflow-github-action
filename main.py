@@ -53,11 +53,11 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str):
 
 
 def main():
-    pipeline_function = load_function(pipeline_function_name=os.environ["pipeline_function_name"], 
-                                      full_path_to_pipeline=os.environ["pipeline_code_path"])
+    pipeline_function = load_function(pipeline_function_name=os.environ["PIPELINE_FUNCTION_NAME"], 
+                                      full_path_to_pipeline=os.environ["PIPELINE_CODE_PATH"])
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
-                    pipeline_name=os.environ["pipeline_function_name"])
+                    pipeline_name=os.environ["PIPELINE_FUNCTION_NAME"])
 
 
 if __name__ == "__main__": 
