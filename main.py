@@ -47,7 +47,8 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :st
     """
     client = kfp.Client(
         host=kubeflow_url, 
-        client_id=client_id
+        client_id=client_id,
+        other
         )
     client.upload_pipeline(
         pipeline_package_path=pipeline_name_zip, 
@@ -56,6 +57,7 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :st
 
 
 def main():
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
