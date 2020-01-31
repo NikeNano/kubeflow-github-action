@@ -23,7 +23,7 @@ def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> o
     return pipeline_func
 
 
-def pipeline_compile(pipeline_function :object) -> str: 
+def pipeline_compile(pipeline_function :object, github_sha :str) -> str: 
     """Function to compile pipeline. The pipeline is compiled to a zip file. 
     
     Arguments:
@@ -32,7 +32,7 @@ def pipeline_compile(pipeline_function :object) -> str:
     Returns:
         str -- The name of the compiled kubeflow pipeline
     """
-    pipeline_name_zip = pipeline_function.__name__ + ".zip"
+    pipeline_name_zip = pipeline_function.__name__+ github_sha + ".zip"
     compiler.Compiler().compile(pipeline_function, pipeline_name_zip)
     return pipeline_name_zip
 
@@ -58,7 +58,7 @@ def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
-    pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
+    pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function, github_sha=os.environ["GITHUB_SHA")
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
                     pipeline_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                     kubeflow_url=os.environ['INPUT_KUBEFLOW_URL'],
