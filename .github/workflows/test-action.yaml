@@ -1,4 +1,4 @@
-name: Compile and Deploy
+name: Compile and Deploy to Kubeflow
 on: [push]
 
 # Set environmental variables
@@ -10,14 +10,9 @@ jobs:
     - name: checkout files in repo
       uses: actions/checkout@master
 
-      
-    - name: See all files
-      run: |
-        ls 
-        printenv
 
     - name: Submit Kubeflow pipeline
-      id: argo
+      id: kubeflow
       uses: NikeNano/kubeflow-github-action@master
       with:
         KUBEFLOW_URL: ${{ secrets.KUBEFLOW_URL }}
