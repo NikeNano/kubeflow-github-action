@@ -53,17 +53,60 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :st
         pipeline_name=pipeline_name)
     return client
 
+def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str, page_token: str=" ") -> str:
+    """Function to find the pipeline id of a pipeline. 
+    
+    Arguments:
+        pipeline_name {str} -- The name of the pipeline of interest
+        client {kfp.Client} -- The kfp client
+        page_size {str} -- The number of pipelines to collect a each API request
+    
+    Keyword Arguments:
+        page_token {str} -- The page token to use for the API request (default: {" "})
+    
+    Returns:
+        [type] -- The pipeline id. If None no match
+    """
+    while True: 
+        pipelines = client.list_pipelines(page_size=page_size, page_token=page_token)
+        for pipeline in pipelines.pipelines: 
+            if pipeline.name == pipeline_name: 
+                return pipeline.id
+        # Start need to know where to do next itteration from 
+        page_token = pipelines.next_page_token
+        # If no next tooken break
+        if not page_token:
+            break
+
+
+def run_pipeline(pipeline_id: str, experiment_id: str, pipeline_paramters: dict):
+    if os.getenv["INPUT_PIPELINE_NAMESPACE"]:
+        namespace = os.environ["INPUT_PIPELINE_NAMESPACE"]
+    client.run_pipeline(
+        experiment_id=experiment_id, 
+        job_name=job_name, 
+        params={}, # Read this as a yaml, people seam to prefer that to json.  
+        pipeline_id=pipeline_id, 
+        namespace=None))
+    
+
 
 def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
+    pipeline_name = os.environ['INPUT_PIPELINE_FUNCTION_NAME'] + "_" + os.environ["GITHUB_SHA"]
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
-                    pipeline_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'] + "_" + os.environ["GITHUB_SHA"], 
+                    pipeline_name=pipeline_name, 
                     kubeflow_url=os.environ['INPUT_KUBEFLOW_URL'],
                     client_id=os.environ["INPUT_CLIENT_ID"])
 
+    if os.getenv("run"):
+        pipeline_id = find_pipeline_id(pipeline_name=pipeline_name,
+            client=client)
+        experiment_id = find_experiment_id()
+        run_pipeline(pipeline_id=pipeline_id, client=client)
 
 if __name__ == "__main__": 
     main()
