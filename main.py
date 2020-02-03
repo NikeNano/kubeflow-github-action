@@ -1,4 +1,5 @@
 import os
+import yaml
 import kfp
 import kfp.compiler as compiler
 import click
@@ -104,9 +105,11 @@ def find_experiment_id(experiment_name: str, client: kfp.Client) -> str:
 
 
 def read_pipeline_params(pipeline_paramters_path:str ) -> dict: 
-    "Continue here"
-    #[TODO]
-    #https://stackoverflow.com/questions/13019653/converting-yaml-file-to-python-dict
+    #[TODO] add docstring here
+    with open(pipeline_paramters_path) as f:
+        # use safe_load instead load
+        pipeline_params = yaml.safe_load(f)
+    return pipeline_params
 
 
 def run_pipeline(pipeline_name:str , pipeline_id: str, experiment_id: str, pipeline_paramters_path: dict):
