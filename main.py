@@ -143,6 +143,7 @@ def run_pipeline(client: kfp.Client, pipeline_name: str , pipeline_id: str, pipe
     #[TODO] What would be a good way to name the jobs
     job_name = pipeline_name + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     logging.info(f"The job name is: {job_name}")
+    
     pipeline_params = read_pipeline_params(pipeline_paramters_path=pipeline_paramters_path)
     pipeline_params = pipeline_params if pipeline_params != None else {}
     client.run_pipeline(
