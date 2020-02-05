@@ -130,7 +130,7 @@ def read_pipeline_params(pipeline_paramters_path:str ) -> dict:
     return pipeline_params
 
 
-def run_pipeline(pipeline_name:str , pipeline_id: str, experiment_id: str, pipeline_paramters_path: dict):
+def run_pipeline(client: kfp.Client, pipeline_name: str , pipeline_id: str, experiment_id: str, pipeline_paramters_path: dict):
     experiment_id = find_experiment_id(experiment_name=os.environ["INPUT_EXPERIMENT_NAME"], client=client)
     if not experiment_id: 
         raise ValueError("Failed to find experiment with the name: {}".format(os.environ["INPUT_EXPERIMENT_NAME"]))
