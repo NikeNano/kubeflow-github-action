@@ -120,7 +120,7 @@ def find_experiment_id(experiment_name: str, client: kfp.Client, page_size: int=
 
 def read_pipeline_params(pipeline_paramters_path:str ) -> dict: 
     #[TODO] add docstring here
-    pipeline_params = None
+    pipeline_params = {}
     with open(pipeline_paramters_path) as f:
         try:
             pipeline_params = yaml.safe_load(f)
