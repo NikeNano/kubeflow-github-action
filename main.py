@@ -66,7 +66,5 @@ def main():
 
 
 if __name__ == "__main__": 
-    print("HERE")
-    print("HERE")
-    print("HERE")
+
     main()
