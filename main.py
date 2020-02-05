@@ -163,7 +163,7 @@ def main():
                     kubeflow_url=os.environ['INPUT_KUBEFLOW_URL'],
                     client_id=os.environ["INPUT_CLIENT_ID"])
     print("Here we have some logging...")
-    if os.getenv("run"):
+    if os.getenv("INPUT_RUN_PIPELINE"):
         logging.info("Started the process to run the pipeline on kubeflow.")
         pipeline_id = find_pipeline_id(pipeline_name=pipeline_name,
             client=client)
