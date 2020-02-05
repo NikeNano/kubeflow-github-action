@@ -4,10 +4,14 @@ import kfp
 import kfp.compiler as compiler
 import click
 import importlib.util
+
+import logging
+import sys
 #from client import Client
 #Here import the client and then schedule the jobs
 from datetime import datetime
 
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> object:
     """Function to load python function from filepath and filename
@@ -20,10 +24,13 @@ def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> o
     Returns:
         object -- [description]
     """
+    logging.info(f"Loading the pipeline function from: {full_path_to_pipeline}")
+    logging.info(f"The name of the pipeline function is:{pipeline_function_name}")
     spec = importlib.util.spec_from_file_location(pipeline_function_name, full_path_to_pipeline)
     foo = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(foo)
     pipeline_func = getattr(foo, pipeline_function_name)
+    logging.info("Succesfully loaded the pipeline function.")
     return pipeline_func
 
 
@@ -38,6 +45,7 @@ def pipeline_compile(pipeline_function :object) -> str:
     """
     pipeline_name_zip = pipeline_function.__name__ + ".zip"
     compiler.Compiler().compile(pipeline_function, pipeline_name_zip)
+    logging.info("The pipeline function is compiled.")
     return pipeline_name_zip
 
 
@@ -75,11 +83,13 @@ def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str, pag
         pipelines = client.list_pipelines(page_size=page_size, page_token=page_token)
         for pipeline in pipelines.pipelines: 
             if pipeline.name == pipeline_name: 
+                logging.info(f"The pipeline id is: {pipeline.id}")
                 return pipeline.id
         # Start need to know where to do next itteration from 
         page_token = pipelines.next_page_token
         # If no next tooken break
         if not page_token:
+            logging.info(f"Could not find the pipeline, is the name: {pipeline_name} correct?")
             break
 
 
@@ -98,11 +108,13 @@ def find_experiment_id(experiment_name: str, client: kfp.Client) -> str:
         experiments = client.list_experiments(page_size=page_size, page_token=page_token)
         for experiments in experiments.experiments: 
             if experiments.name == experiments_name: 
+                logging.info("Succesfully collected the experiment id")
                 return experiments.id
         # Start need to know where to do next itteration from 
         page_token = experiments.next_page_token
         # If no next tooken break
         if not page_token:
+            logging.info(f"Could not find the pipeline id, is the experiment name: {experiments_name} correct? ")
             break
 
 
@@ -111,6 +123,7 @@ def read_pipeline_params(pipeline_paramters_path:str ) -> dict:
     with open(pipeline_paramters_path) as f:
         try:
             pipeline_params = yaml.safe_load(f)
+            logging.info(f"The pipeline paramters is: {pipeline_params}")
         except yaml.YAMLError as exc:
             logging.info("The yaml parameters could not be loaded correctly.")
             raise ValueError("The yaml parameters could not be loaded correctly.")
@@ -135,9 +148,11 @@ def run_pipeline(pipeline_name:str , pipeline_id: str, experiment_id: str, pipel
         params=pipeline_params, # Read this as a yaml, people seam to prefer that to json.  
         pipeline_id=pipeline_id, 
         namespace=None)
+    logging.info("Successfully started the pipeline, head over to kubeflow to check it out")
     
 
 def main():
+    logging.info("Started the process to compile and upload the pipeline to kubeflow.")
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
@@ -147,8 +162,9 @@ def main():
                     pipeline_name=pipeline_name, 
                     kubeflow_url=os.environ['INPUT_KUBEFLOW_URL'],
                     client_id=os.environ["INPUT_CLIENT_ID"])
-
+    print("Here we have some logging...")
     if os.getenv("run"):
+        logging.info("Started the process to run the pipeline on kubeflow.")
         pipeline_id = find_pipeline_id(pipeline_name=pipeline_name,
             client=client)
         logging.info(f"The pipeline id is: {pipeline_id}")
