@@ -65,7 +65,7 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :st
         pipeline_name=pipeline_name)
     return client
 
-def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str=100, page_token: str=" ") -> str:
+def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str=100, page_token: str="") -> str:
     """Function to find the pipeline id of a pipeline. 
     
     Arguments:
@@ -162,9 +162,6 @@ def main():
                     pipeline_name=pipeline_name, 
                     kubeflow_url=os.environ['INPUT_KUBEFLOW_URL'],
                     client_id=os.environ["INPUT_CLIENT_ID"])
-    print("Here we have some logging...")
-    print("Here we have some logging...")
-    print("Here we have some logging...")
     if os.getenv("INPUT_RUN_PIPELINE") and os.environ["INPUT_EXPERIMENT_NAME"]:
         logging.info("Started the process to run the pipeline on kubeflow.")
         pipeline_id = find_pipeline_id(pipeline_name=pipeline_name,
