@@ -4,6 +4,8 @@ import kfp
 import kfp.compiler as compiler
 import click
 import importlib.util
+#from client import Client
+#Here import the client and then schedule the jobs
 from datetime import datetime
 
 
@@ -108,16 +110,19 @@ def read_pipeline_params(pipeline_paramters_path:str ) -> dict:
     #[TODO] add docstring here
     with open(pipeline_paramters_path) as f:
         # use safe_load instead load
-        pipeline_params = yaml.safe_load(f)
+        try:
+            pipeline_params = yaml.safe_load(f)
+        except yaml.YAMLError as exc:
+            logging.info("The yaml parameters could not be loaded correctly.")
+            raise ValueError("The yaml parameters could not be loaded correctly.")
     return pipeline_params
 
 
 def run_pipeline(pipeline_name:str , pipeline_id: str, experiment_id: str, pipeline_paramters_path: dict):
-    experiment_id = find_experiment_id(experiment_name=os.environ["INPUT_EXPERIMENT_NAME"], 
-    client=client)
-    logging.info(f"The expriment id is: {experiment_id}")
+    experiment_id = find_experiment_id(experiment_name=os.environ["INPUT_EXPERIMENT_NAME"], client=client)
     if not experiment_id: 
         raise ValueError(f"Failed to find experiment with the name: {os.environ["INPUT_EXPERIMENT_NAME"]}")
+    logging.info(f"The expriment id is: {experiment_id}")
     if os.getenv["INPUT_PIPELINE_NAMESPACE"]:
         namespace = os.environ["INPUT_PIPELINE_NAMESPACE"]
         logging.info(f"The namespace that will be used is: {namespace}")
@@ -130,8 +135,7 @@ def run_pipeline(pipeline_name:str , pipeline_id: str, experiment_id: str, pipel
         job_name=job_name, 
         params=pipeline_params, # Read this as a yaml, people seam to prefer that to json.  
         pipeline_id=pipeline_id, 
-        namespace=None))
-
+        namespace=None)
     
 
 def main():
