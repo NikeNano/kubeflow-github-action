@@ -1,4 +1,4 @@
-name: Compile and Deploy to Kubeflow
+name: Compile, Deploy and Run on Kubeflow
 on: [push]
 
 # Set environmental variables
