@@ -133,7 +133,7 @@ def read_pipeline_params(pipeline_paramters_path:str ) -> dict:
 def run_pipeline(pipeline_name:str , pipeline_id: str, experiment_id: str, pipeline_paramters_path: dict):
     experiment_id = find_experiment_id(experiment_name=os.environ["INPUT_EXPERIMENT_NAME"], client=client)
     if not experiment_id: 
-        raise ValueError(f"Failed to find experiment with the name: {os.environ["INPUT_EXPERIMENT_NAME"]}")
+        raise ValueError("Failed to find experiment with the name: {}".format(os.environ["INPUT_EXPERIMENT_NAME"]))
     logging.info(f"The expriment id is: {experiment_id}")
     if os.getenv["INPUT_PIPELINE_NAMESPACE"]:
         namespace = os.environ["INPUT_PIPELINE_NAMESPACE"]
