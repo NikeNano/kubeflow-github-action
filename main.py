@@ -165,7 +165,7 @@ def main():
     print("Here we have some logging...")
     print("Here we have some logging...")
     print("Here we have some logging...")
-    if os.getenv("INPUT_RUN_PIPELINE"):
+    if os.getenv("INPUT_RUN_PIPELINE") and os.environ["INPUT_EXPERIMENT_NAME"]:
         logging.info("Started the process to run the pipeline on kubeflow.")
         pipeline_id = find_pipeline_id(pipeline_name=pipeline_name,
             client=client)
