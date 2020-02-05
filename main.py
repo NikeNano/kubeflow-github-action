@@ -65,7 +65,7 @@ def upload_pipeline(pipeline_name_zip :str, pipeline_name :str, kubeflow_url :st
         pipeline_name=pipeline_name)
     return client
 
-def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str, page_token: str=" ") -> str:
+def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str=100, page_token: str=" ") -> str:
     """Function to find the pipeline id of a pipeline. 
     
     Arguments:
