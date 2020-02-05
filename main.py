@@ -107,7 +107,7 @@ def find_experiment_id(experiment_name: str, client: kfp.Client, page_size: int=
     while True: 
         experiments = client.list_experiments(page_size=page_size, page_token=page_token)
         for experiments in experiments.experiments: 
-            if experiments.name == experiments_name: 
+            if experiments.name == experiment_name: 
                 logging.info("Succesfully collected the experiment id")
                 return experiments.id
         # Start need to know where to do next itteration from 
