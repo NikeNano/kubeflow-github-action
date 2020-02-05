@@ -49,4 +49,4 @@ cat path-to-key.json | base64
 
 # Future work
 
-Add so that pipelines can be run and scheduled to run as well. 
+Add so that pipelines can be run and scheduled to run as well. Soooon done! 
