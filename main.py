@@ -137,7 +137,7 @@ def run_pipeline(client: kfp.Client, pipeline_name: str , pipeline_id: str, pipe
         raise ValueError("Failed to find experiment with the name: {}".format(os.environ["INPUT_EXPERIMENT_NAME"]))
     logging.info(f"The expriment id is: {experiment_id}")
     namespace = None
-    if os.getenv("INPUT_PIPELINE_NAMESPACE") !=None:
+    if os.getenv("INPUT_PIPELINE_NAMESPACE") !=None &  str.isspace(os.getenv("INPUT_PIPELINE_NAMESPACE"))==False:
         namespace = os.environ["INPUT_PIPELINE_NAMESPACE"]
         logging.info(f"The namespace that will be used is: {namespace}")
     #[TODO] What would be a good way to name the jobs
