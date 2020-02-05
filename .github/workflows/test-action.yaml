@@ -21,6 +21,6 @@ jobs:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         PIPELINE_CODE_PATH: "example_pipeline.py"
         PIPELINE_FUNCTION_NAME: "flipcoin_pipeline"
-	      PIPELINE_PARAMETERS_PATH: "parameters.yaml"
-	      EXPERIMENT_NAME: "Default"
-	      RUN_PIPELINE: true
+        PIPELINE_PARAMETERS_PATH: "parameters.yaml"
+        EXPERIMENT_NAME: "Default"
+        RUN_PIPELINE: true
