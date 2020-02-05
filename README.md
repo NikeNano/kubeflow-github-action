@@ -45,3 +45,8 @@ cat path-to-key.json | base64
 3) CLIENT_ID: The IAP client secret
 4) PIPELINE_CODE_PATH: The full path to the python file containing the pipeline
 5) PIPELINE_FUNCTION_NAME: The name of the pipeline function the PIPELINE_CODE_PATH file
+
+
+# Future work
+
+Add so that pipelines can be run and scheduled to run as well. 
