@@ -94,7 +94,7 @@ def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str=100,
 
 
 
-def find_experiment_id(experiment_name: str, client: kfp.Client) -> str:
+def find_experiment_id(experiment_name: str, client: kfp.Client, page_size: int=100, page_token: str="") -> str:
     """Function to return the experiment id
     
     Arguments:
