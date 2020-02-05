@@ -120,6 +120,7 @@ def find_experiment_id(experiment_name: str, client: kfp.Client, page_size: int=
 
 def read_pipeline_params(pipeline_paramters_path:str ) -> dict: 
     #[TODO] add docstring here
+    pipeline_params = None
     with open(pipeline_paramters_path) as f:
         try:
             pipeline_params = yaml.safe_load(f)
@@ -135,6 +136,7 @@ def run_pipeline(client: kfp.Client, pipeline_name: str , pipeline_id: str, pipe
     if not experiment_id: 
         raise ValueError("Failed to find experiment with the name: {}".format(os.environ["INPUT_EXPERIMENT_NAME"]))
     logging.info(f"The expriment id is: {experiment_id}")
+    namespace = None
     if os.getenv("INPUT_PIPELINE_NAMESPACE") !=None:
         namespace = os.environ["INPUT_PIPELINE_NAMESPACE"]
         logging.info(f"The namespace that will be used is: {namespace}")
@@ -142,12 +144,13 @@ def run_pipeline(client: kfp.Client, pipeline_name: str , pipeline_id: str, pipe
     job_name = pipeline_name + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     logging.info(f"The job name is: {job_name}")
     pipeline_params = read_pipeline_params(pipeline_paramters_path=pipeline_paramters_path)
+    logging.info(f"The pipeline parameters are: {pipeline_params}")
     client.run_pipeline(
         experiment_id=experiment_id, 
         job_name=job_name, 
         params=pipeline_params, # Read this as a yaml, people seam to prefer that to json.  
         pipeline_id=pipeline_id, 
-        namespace=None)
+        namespace=namespace)
     logging.info("Successfully started the pipeline, head over to kubeflow to check it out")
     
 
