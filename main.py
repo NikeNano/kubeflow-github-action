@@ -4,11 +4,8 @@ import kfp
 import kfp.compiler as compiler
 import click
 import importlib.util
-
 import logging
 import sys
-#from client import Client
-#Here import the client and then schedule the jobs
 from datetime import datetime
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
