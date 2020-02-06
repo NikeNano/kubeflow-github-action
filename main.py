@@ -25,7 +25,7 @@ def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> o
         object -- [description]
     """
     logging.info(f"Loading the pipeline function from: {full_path_to_pipeline}")
-    logging.info(f"The name of the pipeline function is:{pipeline_function_name}")
+    logging.info(f"The name of the pipeline function is: {pipeline_function_name}")
     spec = importlib.util.spec_from_file_location(pipeline_function_name, full_path_to_pipeline)
     foo = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(foo)
@@ -171,7 +171,6 @@ def main():
         logging.info("Started the process to run the pipeline on kubeflow.")
         pipeline_id = find_pipeline_id(pipeline_name=pipeline_name,
             client=client)
-        logging.info(f"The pipeline id is: {pipeline_id}")
         run_pipeline(pipeline_name=pipeline_name, 
             pipeline_id=pipeline_id, 
             client=client, 
