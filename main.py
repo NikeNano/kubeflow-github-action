@@ -146,7 +146,7 @@ def run_pipeline(client: kfp.Client, pipeline_name: str , pipeline_id: str, pipe
     
     pipeline_params = read_pipeline_params(pipeline_paramters_path=pipeline_paramters_path)
     pipeline_params = pipeline_params if pipeline_params != None else {}
-    logging.info("experiment_id: {experiment_id}, job_name:{job_name}, params:{params}, pipeline_id:{pipeline_id}, namespace:{namespace}")
+    logging.info(f"experiment_id: {experiment_id}, job_name:{job_name}, params:{params}, pipeline_id:{pipeline_id}, namespace:{namespace}")
     client.run_pipeline(
         experiment_id=experiment_id, 
         job_name=job_name, 
