@@ -6,6 +6,9 @@ The purpose of this action is to allow for automated deployments of [Kubeflow Pi
 
 ## Example Workflow that uses this action 
 
+
+To compile a pipeline and upload it to kubeflow: 
+
 ```yaml
 name: Compile and Deploy to Kubeflow
 on: [push]
@@ -33,6 +36,37 @@ jobs:
 
 ```
 
+If you also would like to run it use the following: 
+
+```yaml
+name: Compile, Deploy and Run on Kubeflow
+on: [push]
+
+# Set environmental variables
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout files in repo
+      uses: actions/checkout@master
+
+
+    - name: Submit Kubeflow pipeline
+      id: kubeflow
+      uses: NikeNano/kubeflow-github-action@run_feature
+      with:
+        KUBEFLOW_URL: ${{ secrets.KUBEFLOW_URL }}
+        ENCODED_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GKE_KEY }}
+        GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcloud-sa.json
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        PIPELINE_CODE_PATH: "example_pipeline.py"
+        PIPELINE_FUNCTION_NAME: "flipcoin_pipeline"
+        PIPELINE_PARAMETERS_PATH: "parameters.yaml"
+        EXPERIMENT_NAME: "Default"
+        RUN_PIPELINE: true
+
+```
 ## Mandatory inputs
 
 1) KUBEFLOW_URL: The URL to your kubeflow deployment
