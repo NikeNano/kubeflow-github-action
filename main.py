@@ -140,6 +140,7 @@ def run_pipeline(client: kfp.Client, pipeline_name: str , pipeline_id: str, pipe
     if (os.getenv("INPUT_PIPELINE_NAMESPACE") !=None) and  (str.isspace(os.getenv("INPUT_PIPELINE_NAMESPACE"))==False):
         namespace = os.environ["INPUT_PIPELINE_NAMESPACE"]
         logging.info(f"The namespace that will be used is: {namespace}")
+    namespace = None
     #[TODO] What would be a good way to name the jobs
     job_name = pipeline_name + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     logging.info(f"The job name is: {job_name}")
