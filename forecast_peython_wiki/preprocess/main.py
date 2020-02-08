@@ -5,7 +5,14 @@ import logging
 from google.cloud import storage
 
 
-def upload_blob(bucket_name, source_file_name, destination_blob_name):
+def upload_blob(bucket_name: str, source_file_name: str, destination_blob_name: str):
+    """Function to upload to gcp bucket
+    
+    Arguments:
+        bucket_name {str} -- The name of the bucket.
+        source_file_name {str} -- The name of the source file that should be uploaded.
+        destination_blob_name {str} -- The name of the file in the bucket. 
+    """
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
@@ -26,7 +33,6 @@ def main(url: str, bucket: str, destination_blob_name: str):
     filename = wget.download(url)   
     upload_blob(bucket_name=bucket, source_file_name=filename, destination_blob_name=destination_blob_name)    
     logging.info("File extracted and uploaded to bucket")
-
 
 
 if __name__ == "__main__":

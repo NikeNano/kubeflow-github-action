@@ -3,8 +3,14 @@ import tempfile
 from fbprophet import Prophet
 
 
-def download_blob(bucket_name, source_blob_name, destination_file_name):
-    """Downloads a blob from the bucket."""
+def download_blob(bucket_name: str, source_blob_name: str, destination_file_name: str):
+    """Function to download file from gcp bucet
+    
+    Arguments:
+        bucket_name {str} -- The name of the bucket from which the data should be downloaded.
+        source_blob_name {str} -- The name of the file in the bucket which should be downloaded.
+        destination_file_name {str} -- The local file pat for the downloaded file. 
+    """
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
@@ -18,7 +24,14 @@ def download_blob(bucket_name, source_blob_name, destination_file_name):
     )
 
 
-def upload_blob(bucket_name, source_file_name, destination_blob_name):
+def upload_blob(bucket_name: str, source_file_name: str, destination_blob_name: str):
+    """Function to upload file to bucket. 
+    
+    Arguments:
+        bucket_name {str} -- The name of the bucket on gcp.
+        source_file_name {str} -- The filepath to the file that should be uploaded.
+        destination_blob_name {str} -- The name of the file in the bucket.
+    """
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
