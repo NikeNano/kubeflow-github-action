@@ -6,6 +6,7 @@ import click
 import importlib.util
 import logging
 import sys
+import inspect
 from datetime import datetime
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
