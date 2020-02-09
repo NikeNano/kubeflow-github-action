@@ -5,7 +5,7 @@ import click
 import logging
 
 
-def pipeline(github_sha:str=):
+def pipeline(github_sha :str):
     """Returns the pipeline function with the github_sha used for the versioning of the containers and enviroment of the containers as well. 
 
     
