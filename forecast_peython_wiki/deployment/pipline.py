@@ -42,8 +42,7 @@ def pipeline(github_sha :str):
                     "--bucket", gcp_bucket,
                     "--destination_blob_name", train_data
             ]
-        ).apply(use_secret(secret_name=secret_database_name, volume_name="mysecretvolume-one", secret_volume_mount_path=secret_volume_mount_path_sandtrade_database)) \
-            .set_image_pull_policy('Always')
+        ).set_image_pull_policy('Always')
 
         operations['train_forecast'] = dsl.ContainerOp(
             name='Forecast',
@@ -54,8 +53,7 @@ def pipeline(github_sha :str):
                     "--source_blob_name", train_data,
                     "--forecast_blob_name", forecast_data
             ]
-        ).apply(use_secret(secret_name=secret_database_name, volume_name="mysecretvolume-one", secret_volume_mount_path=secret_volume_mount_path_sandtrade_database)) \
-            .set_image_pull_policy('Always')
+        ).set_image_pull_policy('Always')
     
         for _,operation in operations.items():
             operation.apply(gcp.use_gcp_secret('user-gcp-sa'))
