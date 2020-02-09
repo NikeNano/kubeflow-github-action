@@ -17,7 +17,7 @@ def pipeline(github_sha :str):
         name="Example pipeline github action",
         description="This pipeline show how you can version the pipeline components using the githash"
     )
-    def timeseries_pipeline(gcp_bucket: str, gcp_project: str, train_data :str="train.csv", forecast_data: str="forecast.csv"):
+    def timeseries_pipeline(gcp_bucket: str, project: str, train_data :str="train.csv", forecast_data: str="forecast.csv"):
         """The kfp pipeline function. 
         
         Arguments:

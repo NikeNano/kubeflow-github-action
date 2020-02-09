@@ -1,6 +1,6 @@
 gcp_bucket: 
     github_action
-gcp_project: 
+project: 
     kubeflow-github-267119
 train_data:
     train_data.csv 
