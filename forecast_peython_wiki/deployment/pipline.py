@@ -18,7 +18,7 @@ def pipeline(github_sha :str):
         name="Example pipeline github action",
         description="This pipeline show how you can version the pipeline components using the githash"
     )
-    def timeseries_pipeline(gcp_bucket: str, gcp_project: str, train_data :str="train.csv", forecast_date: str="forecast.csv"):
+    def timeseries_pipeline(gcp_bucket: str, gcp_project: str, train_data :str="train.csv", forecast_data: str="forecast.csv"):
         """The kfp pipeline function. 
         
         Arguments:
@@ -51,7 +51,7 @@ def pipeline(github_sha :str):
             arguments=["main.py",
                     "--bucket", gcp_bucket,
                     "--source_blob_name", train_data,
-                    "--forecast_blob_name", forecast_date
+                    "--forecast_blob_name", forecast_data
             ]
         ).apply(use_secret(secret_name=secret_database_name, volume_name="mysecretvolume-one", secret_volume_mount_path=secret_volume_mount_path_sandtrade_database)) \
             .set_image_pull_policy('Always')

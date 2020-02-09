@@ -1,10 +1,8 @@
 gcp_bucket: 
     github_action
-test: 
-    kubeflow-github-267119
 gcp_project: 
     kubeflow-github-267119
 train_data:
     train_data.csv 
-forecast_date: 
+forecast_data: 
     forecat_data.csv
