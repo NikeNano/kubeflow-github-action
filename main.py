@@ -125,6 +125,7 @@ def read_pipeline_params(pipeline_paramters_path:str ) -> dict:
         except yaml.YAMLError as exc:
             logging.info("The yaml parameters could not be loaded correctly.")
             raise ValueError("The yaml parameters could not be loaded correctly.")
+        logging.info(f"The paramters are: {pipeline_params}")
     return pipeline_params
 
 
