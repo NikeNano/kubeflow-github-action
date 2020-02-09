@@ -29,7 +29,7 @@ jobs:
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" forecast_peython_wiki/preprocess/.
 
-      - name: Publish preprocessing image
+    - name: Publish preprocessing image
       env: 
         IMAGE: -pre_image-forecasting
       run: |
@@ -46,7 +46,7 @@ jobs:
           --build-arg GITHUB_REF="$GITHUB_REF" forecast_peython_wiki/preprocess/.
     
 
-      - name: Publish train forecast image
+    - name: Publish train forecast image
       env: 
         IMAGE: train_forecast_image
       run: |
