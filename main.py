@@ -7,7 +7,7 @@ import importlib.util
 import logging
 import sys
 from datetime import datetime
-from IPython import embed
+
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
@@ -29,7 +29,6 @@ def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> o
     spec.loader.exec_module(foo)
     pipeline_func = getattr(foo, pipeline_function_name)
     logging.info("Succesfully loaded the pipeline function.")
-    embed()
     return pipeline_func
 
 
