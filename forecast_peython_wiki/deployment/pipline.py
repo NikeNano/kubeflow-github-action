@@ -3,7 +3,9 @@ import datetime
 import os
 import click
 import logging
-def pipeline(env:str="develop", github_sha:str=):
+
+
+def pipeline(github_sha:str=):
     """Returns the pipeline function with the github_sha used for the versioning of the containers and enviroment of the containers as well. 
 
     
@@ -26,8 +28,8 @@ def pipeline(env:str="develop", github_sha:str=):
             train_data {str} -- The name of the train file that is uploaded to the bucket (default: {"train.csv"})
             forecast_date {str} -- The name of the forecast file uploaded to the bucket (default: {"forecast.csv"})
         """
-        pre_image = f"gcr.io/{project}/{env}_pre_image:{github_sha}"
-        train_forecast_image = f"gcr.io/{project}/{env}_train_forecast_image:{github_sha}"
+        pre_image = f"gcr.io/{project}/pre_image:{github_sha}"
+        train_forecast_image = f"gcr.io/{project}/train_forecast_image:{github_sha}"
 
         operations['preprocess'] = dsl.ContainerOp(
             name='Preprocess',

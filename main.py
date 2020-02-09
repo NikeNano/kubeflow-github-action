@@ -158,6 +158,8 @@ def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
+    if os.environ["INPUT_VERSION_GITHUB_SHA"]:
+        pipeline_function = pipeline_function()
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
     pipeline_name = os.environ['INPUT_PIPELINE_FUNCTION_NAME'] + "_" + os.environ["GITHUB_SHA"]
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
