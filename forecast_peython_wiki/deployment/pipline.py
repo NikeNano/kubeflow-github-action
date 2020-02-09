@@ -54,7 +54,9 @@ def pipeline(github_sha :str):
                     "--forecast_blob_name", forecast_data
             ]
         ).set_image_pull_policy('Always')
-    
+        operations["train_forecast"].after(operations["preprocess"])
+        
+
         for _,operation in operations.items():
             operation.apply(gcp.use_gcp_secret('user-gcp-sa'))
             dsl.get_pipeline_conf()
