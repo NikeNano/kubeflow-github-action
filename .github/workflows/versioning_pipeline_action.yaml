@@ -18,7 +18,7 @@ jobs:
 
     - run: |
         gcloud auth configure-docker
-      
+       
     - name: Build preprocessing image
       env: 
         IMAGE_NAME: pre_image
@@ -26,8 +26,8 @@ jobs:
         docker build -t gcr.io/$GKE_PROJECT/$IMAGE_NAME:$GITHUB_SHA \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" forecast_peython_wiki/preprocess/.
-    
-      - name: Build train forecast image
+
+    - name: Build train forecast image
       env: 
         IMAGE_NAME: train_forecast_image
       run: |
