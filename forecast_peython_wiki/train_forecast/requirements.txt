@@ -4,3 +4,4 @@ google-cloud-storage==1.25
 google==2.0.*
 pandas==1.0.*
 fbprophet==0.5
+holidays==0.9.12
