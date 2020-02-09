@@ -162,6 +162,7 @@ def main():
     if os.environ["INPUT_VERSION_GITHUB_SHA"]:
         logging.info("Versioned pipeline components")
         pipeline_function = pipeline_function(github_sha=os.environ["GITHUB_SHA"])
+    logging.info("The pipeline expected paramters are: {}".format(inspect.getargspec(pipeline_function)))
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
     pipeline_name = os.environ['INPUT_PIPELINE_FUNCTION_NAME'] + "_" + os.environ["GITHUB_SHA"]
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
