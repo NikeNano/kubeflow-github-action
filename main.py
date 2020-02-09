@@ -6,7 +6,6 @@ import click
 import importlib.util
 import logging
 import sys
-import inspect
 from datetime import datetime
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -162,11 +161,8 @@ def main():
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
     logging.info("The value of the VERSION_GITHUB_SHA is: {}".format(os.environ["INPUT_VERSION_GITHUB_SHA"]))
     if os.environ["INPUT_VERSION_GITHUB_SHA"]:
-        # ISSUE HERE HERE HERE HERE HERE HERE 
-        # HERE I NEED TO DO THE UPDATES
         logging.info("Versioned pipeline components")
         pipeline_function = pipeline_function(github_sha=os.environ["GITHUB_SHA"])
-    logging.info("The pipeline expected paramters are: {}".format(inspect.getargspec(pipeline_function)))
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
     pipeline_name = os.environ['INPUT_PIPELINE_FUNCTION_NAME'] + "_" + os.environ["GITHUB_SHA"]
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
