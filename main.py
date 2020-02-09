@@ -159,7 +159,10 @@ def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
+    logging.info("The value of the VERSION_GITHUB_SHA is: {}".format(os.environ["INPUT_VERSION_GITHUB_SHA"]))
     if os.environ["INPUT_VERSION_GITHUB_SHA"]:
+        # ISSUE HERE HERE HERE HERE HERE HERE 
+        # HERE I NEED TO DO THE UPDATES
         logging.info("Versioned pipeline components")
         pipeline_function = pipeline_function(github_sha=os.environ["GITHUB_SHA"])
     logging.info("The pipeline expected paramters are: {}".format(inspect.getargspec(pipeline_function)))
