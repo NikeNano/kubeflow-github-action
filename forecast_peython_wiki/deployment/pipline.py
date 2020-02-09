@@ -46,7 +46,7 @@ def pipeline(github_sha :str):
 
         operations['train_forecast'] = dsl.ContainerOp(
             name='Forecast',
-            image=pre_image,
+            image=train_forecast_image,
             command=['python3'],
             arguments=["main.py",
                     "--bucket", gcp_bucket,
