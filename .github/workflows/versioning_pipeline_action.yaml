@@ -31,7 +31,7 @@ jobs:
 
     - name: Publish preprocessing image
       env: 
-        IMAGE: -pre_image-forecasting
+        IMAGE_NAME: pre_image
       run: |
         echo gcr.io/$GKE_PROJECT/$IMAGE_NAME:$GITHUB_SHA
         docker push gcr.io/$GKE_PROJECT/$IMAGE_NAME:$GITHUB_SHA
@@ -48,7 +48,7 @@ jobs:
 
     - name: Publish train forecast image
       env: 
-        IMAGE: train_forecast_image
+        IMAGE_NAME: train_forecast_image
       run: |
         echo gcr.io/$GKE_PROJECT/$IMAGE_NAME:$GITHUB_SHA
         docker push gcr.io/$GKE_PROJECT/$IMAGE_NAME:$GITHUB_SHA
