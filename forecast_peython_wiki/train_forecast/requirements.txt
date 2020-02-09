@@ -1,0 +1,4 @@
+click==7.0
+wget==3.2
+google-cloud-storage==1.25
+google==2.0
