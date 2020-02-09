@@ -5,7 +5,7 @@ import logging
 import os 
 
 from fbprophet import Prophet
-
+from google.cloud import storage
 
 def download_blob(bucket_name: str, source_blob_name: str, destination_file_name: str):
     """Function to download file from gcp bucet
