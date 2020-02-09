@@ -2,7 +2,9 @@ name: Compile, Deploy and Run versioned pipeline on Kubeflow
 on: [push]
 
 # Set environmental variables
-
+env:
+  GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
+  
 jobs:
   build:
     runs-on: ubuntu-latest
