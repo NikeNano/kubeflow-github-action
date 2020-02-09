@@ -14,7 +14,7 @@ def pipeline(github_sha :str):
         github_sha {str} --The github sha used for the versioning
     """
     @kfp.dsl.pipeline(
-        name="Example pipeline github action"
+        name="Example pipeline github action",
         description="This pipeline show how you can version the pipeline components using the githash"
     )
     def timeseries_pipeline(gcp_bucket: str, project: str, train_data :str="train.csv", forecast_date: str="forecast.csv"):
