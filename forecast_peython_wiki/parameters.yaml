@@ -1,0 +1,8 @@
+gcp_bucket: 
+    str 
+project: 
+    str
+train_data:
+    str 
+forecast_date: 
+    str
