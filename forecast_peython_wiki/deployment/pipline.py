@@ -3,7 +3,9 @@ import datetime
 import os
 import click
 import logging
-
+import kfp
+import kfp.dsl as dsl
+import kfp.gcp as gcp
 
 def pipeline(github_sha :str):
     """Returns the pipeline function with the github_sha used for the versioning of the containers and enviroment of the containers as well. 
@@ -30,7 +32,7 @@ def pipeline(github_sha :str):
         """
         pre_image = f"gcr.io/{project}/pre_image:{github_sha}"
         train_forecast_image = f"gcr.io/{project}/train_forecast_image:{github_sha}"
-
+        operations = {}
         operations['preprocess'] = dsl.ContainerOp(
             name='Preprocess',
             image=pre_image,
@@ -55,4 +57,10 @@ def pipeline(github_sha :str):
         ).apply(use_secret(secret_name=secret_database_name, volume_name="mysecretvolume-one", secret_volume_mount_path=secret_volume_mount_path_sandtrade_database)) \
             .set_image_pull_policy('Always')
     
+        for _,operation in operations.items():
+            operation.apply(gcp.use_gcp_secret('user-gcp-sa'))
+            dsl.get_pipeline_conf()
+
+        return operations
+            
     return timeseries_pipeline
