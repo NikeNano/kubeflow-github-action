@@ -37,7 +37,7 @@ def pipeline(github_sha :str):
             command=['python3'],
             arguments=["main.py",
                     "--url", "https://raw.githubusercontent.com/facebook/prophet/master/examples/example_wp_log_peyton_manning.csv",
-                    "--bucket", gcp_bucket
+                    "--bucket", gcp_bucket,
                     "--destination_blob_name", train_data
             ]
         ).apply(use_secret(secret_name=secret_database_name, volume_name="mysecretvolume-one", secret_volume_mount_path=secret_volume_mount_path_sandtrade_database)) \
@@ -48,8 +48,8 @@ def pipeline(github_sha :str):
             image=pre_image,
             command=['python3'],
             arguments=["main.py",
-                    "--bucket", gcp_bucket
-                    "--source_blob_name", train_data
+                    "--bucket", gcp_bucket,
+                    "--source_blob_name", train_data,
                     "--forecast_blob_name", forecast_date
             ]
         ).apply(use_secret(secret_name=secret_database_name, volume_name="mysecretvolume-one", secret_volume_mount_path=secret_volume_mount_path_sandtrade_database)) \
