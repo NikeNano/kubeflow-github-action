@@ -3,7 +3,6 @@ import datetime
 import os
 import click
 import logging
-import inspect
 
 
 def pipeline(github_sha :str):
@@ -55,3 +54,5 @@ def pipeline(github_sha :str):
             ]
         ).apply(use_secret(secret_name=secret_database_name, volume_name="mysecretvolume-one", secret_volume_mount_path=secret_volume_mount_path_sandtrade_database)) \
             .set_image_pull_policy('Always')
+    
+    return timeseries_pipeline
