@@ -1,8 +1,8 @@
 gcp_bucket: 
-    str 
+    github_action
 project: 
-    str
+    kubeflow-github-267119
 train_data:
-    str 
+    train_data.csv 
 forecast_date: 
-    str
+    forecat_data.csv
