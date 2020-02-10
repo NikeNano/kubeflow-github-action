@@ -407,8 +407,6 @@ class Client(object):
             trigger=trigger,
             enabled=True,
         )
-        # [TODO] Add link to the scheduled job.
-        response = self._job_api.create_job(body=schedule_body)
 
     def create_run_from_pipeline_func(self, pipeline_func: Callable, arguments: Mapping[str, str], run_name=None, experiment_name=None, pipeline_conf: kfp.dsl.PipelineConf = None, namespace=None):
         '''Runs pipeline on KFP-enabled Kubernetes cluster.
