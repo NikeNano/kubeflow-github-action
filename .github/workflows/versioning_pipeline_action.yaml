@@ -66,5 +66,5 @@ jobs:
         PIPELINE_FUNCTION_NAME: "pipeline"
         PIPELINE_PARAMETERS_PATH: "forecast_peython_wiki/parameters.yaml"
         EXPERIMENT_NAME: "Default"
-        RUN_PIPELINE: true
-        VERSION_GITHUB_SHA: true
+        RUN_PIPELINE: True
+        VERSION_GITHUB_SHA: True
