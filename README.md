@@ -17,7 +17,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - name: checkout files in repo
       uses: actions/checkout@master
@@ -50,7 +50,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - name: checkout files in repo
       uses: actions/checkout@master
@@ -72,7 +72,7 @@ jobs:
         VERSION_GITHUB_SHA: False
 
 ```
-The repo also contains an example where the containers in the pipeline are versioned with the github hash in order to improve operations and tracking of errors. However this requires that the pipelines function is wrapped in a function with one argument: 
+The repo also contains an example where the containers in the pipeline are versioned with the github hash in order to improve operations and tracking of errors. However this requires that the pipelines function to be wrapped in a function with one argument: 
 
 ```python 
 
@@ -81,7 +81,7 @@ The repo also contains an example where the containers in the pipeline are versi
       
 ```
 
-and that the containers are versioned with the hash: 
+the containers is versioned with the hash: 
 
 
 ```python
