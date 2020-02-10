@@ -56,7 +56,7 @@ jobs:
             
     - name: Submit Kubeflow pipeline
       id: kubeflow
-      uses: NikeNano/kubeflow-github-action@versioned_pipeline
+      uses: NikeNano/kubeflow-github-action@master
       with:
         KUBEFLOW_URL: ${{ secrets.KUBEFLOW_URL }}
         ENCODED_GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GKE_KEY }}
