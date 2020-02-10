@@ -1,7 +1,11 @@
 import pandas as pd
 import tempfile
-from fbprophet import Prophet
+import click
+import logging
+import os 
 
+from fbprophet import Prophet
+from google.cloud import storage
 
 def download_blob(bucket_name: str, source_blob_name: str, destination_file_name: str):
     """Function to download file from gcp bucet
@@ -47,7 +51,7 @@ def upload_blob(bucket_name: str, source_file_name: str, destination_blob_name: 
 @click.option("--bucket", required=True, help="The name of the gcp bucket")
 @click.option("--source_blob_name", default="raw_data.csv", help="The raw file to download", required=True)
 @click.option("--forecast_blob_name", default="raw_data.csv", help="The forecast to upload", required=True)
-def main(bucket: str, source_blob_name :str, destination_blob_name:str):
+def main(bucket: str, source_blob_name :str, forecast_blob_name:str):
     with tempfile.TemporaryDirectory() as tmpdirname:
         local_file = os.path.join(tmpdirname,"tmp.csv") 
         download_blob(bucket_name=bucket, source_blob_name=source_blob_name, destination_file_name=local_file)

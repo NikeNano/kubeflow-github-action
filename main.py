@@ -8,6 +8,7 @@ import logging
 import sys
 from datetime import datetime
 
+
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 def load_function(pipeline_function_name  :str, full_path_to_pipeline :str) -> object:
@@ -125,6 +126,7 @@ def read_pipeline_params(pipeline_paramters_path:str ) -> dict:
         except yaml.YAMLError as exc:
             logging.info("The yaml parameters could not be loaded correctly.")
             raise ValueError("The yaml parameters could not be loaded correctly.")
+        logging.info(f"The paramters are: {pipeline_params}")
     return pipeline_params
 
 
@@ -158,6 +160,10 @@ def main():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
+    logging.info("The value of the VERSION_GITHUB_SHA is: {}".format(os.environ["INPUT_VERSION_GITHUB_SHA"]))
+    if os.environ["INPUT_VERSION_GITHUB_SHA"]:
+        logging.info("Versioned pipeline components")
+        pipeline_function = pipeline_function(github_sha=os.environ["GITHUB_SHA"])
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
     pipeline_name = os.environ['INPUT_PIPELINE_FUNCTION_NAME'] + "_" + os.environ["GITHUB_SHA"]
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip, 
