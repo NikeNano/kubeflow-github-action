@@ -20,6 +20,12 @@ inputs:
   GOOGLE_APPLICATION_CREDENTIALS:
     description: The path to the decoded google credentials
     required: true
+  EXPERIMENT_NAME: 
+    description: The name of the experiment name within which the kubeflow experiment should run
+    required: false
+  PIPELINE_NAMESPACE: 
+    description: The namespace in which the pipeline should run
+    required: false
 outputs:
   WORKFLOW_URL:
     description: URL that is a link to pipeline in Kubeflow
@@ -29,10 +35,3 @@ branding:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.KUBEFLOW_URL }}
-    - ${{ inputs.CLIENT_ID }}
-    - ${{ inputs.PIPELINE_CODE_PATH }}
-    - ${{ inputs.PIPELINE_FUNCTION_NAME }}
-    - ${{ inputs.GOOGLE_APPLICATION_CREDENTIALS }}
-    - ${{ inputs.ENCODED_GOOGLE_APPLICATION_CREDENTIALS }}
