@@ -1,4 +1,4 @@
-name: 'actions-kubeflow'
+name: Kubeflow compile, deploy and run. 
 description: Build, deploy and run a kubeflow pipeline
 author: Niklas Hansson
 inputs:
