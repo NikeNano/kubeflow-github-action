@@ -161,7 +161,7 @@ def main():
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
     logging.info("The value of the VERSION_GITHUB_SHA is: {}".format(os.environ["INPUT_VERSION_GITHUB_SHA"]))
-    if os.environ["INPUT_VERSION_GITHUB_SHA"] == "True":
+    if os.environ["INPUT_VERSION_GITHUB_SHA"] == "true":
         logging.info("Versioned pipeline components")
         pipeline_function = pipeline_function(github_sha=os.environ["GITHUB_SHA"])
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
@@ -172,7 +172,7 @@ def main():
                     client_id=os.environ["INPUT_CLIENT_ID"])
     logging.info(os.getenv("INPUT_RUN_PIPELINE"))
     logging.info(os.environ["INPUT_EXPERIMENT_NAME"])
-    if os.getenv("INPUT_RUN_PIPELINE")=="True" and os.environ["INPUT_EXPERIMENT_NAME"]:
+    if os.getenv("INPUT_RUN_PIPELINE")=="true" and os.environ["INPUT_EXPERIMENT_NAME"]:
         logging.info("Started the process to run the pipeline on kubeflow.")
         pipeline_id = find_pipeline_id(pipeline_name=pipeline_name,
             client=client)
