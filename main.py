@@ -161,7 +161,7 @@ def main():
     pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'], 
                                       full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
     logging.info("The value of the VERSION_GITHUB_SHA is: {}".format(os.environ["INPUT_VERSION_GITHUB_SHA"]))
-    if os.environ["INPUT_VERSION_GITHUB_SHA"]==True:
+    if os.environ["INPUT_VERSION_GITHUB_SHA"] == "True":
         logging.info("Versioned pipeline components")
         pipeline_function = pipeline_function(github_sha=os.environ["GITHUB_SHA"])
     pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
