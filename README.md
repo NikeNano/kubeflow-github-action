@@ -1,6 +1,6 @@
-# This action Submigs Kubeflow pipelines to Kubeflow from Github Actions. 
+# This action Submits Kubeflow Pipelines to Kubeflow cluster running on Google Cloud Platform. 
 
-The purpose of this action is to allow for automated deployments of [Kubeflow Pipelines](https://github.com/kubeflow/pipelines). The action will collect the pipeline from a python file and compile it before uploading it to kubeflow. The kubeflow deployment has to be using [IAP](https://www.kubeflow.org/docs/gke/deploy/monitor-iap-setup/) on GCP for this action
+The purpose of this action is to allow for automated deployments of [Kubeflow Pipelines](https://github.com/kubeflow/pipelines) on Google Cloud Platform (GCP). The action will collect the pipeline from a python file and compile it before uploading it to Kubeflow. The Kubeflow deployment must be using [IAP](https://www.kubeflow.org/docs/gke/deploy/monitor-iap-setup/) on GCP to work.
 
 # Usage
 
