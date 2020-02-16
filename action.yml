@@ -1,5 +1,5 @@
-name: Kubeflow compile, deploy and run. 
-description: Build, deploy and run a kubeflow pipeline
+name: Manage Kubeflow Pipelines on GCP. 
+description: Build, deploy and run a Kubeflow Pipeline on Google Cloud Platform.
 author: Niklas Hansson
 inputs:
   KUBEFLOW_URL:
