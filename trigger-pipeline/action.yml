@@ -1,0 +1,39 @@
+name: Manage Kubeflow Pipelines on GCP. 
+description: Build, deploy and run a Kubeflow Pipeline on Google Cloud Platform.
+inputs:
+  KUBEFLOW_URL:
+    description: The endpoint where your Kubeflow UI is running. 
+    required: true
+  CLIENT_ID:
+    description: The IAP client id, which was specified when the kubeflow deployment where setup using IAP.
+    require: true
+  PIPELINE_PARAMETERS_PATH:
+    description: Path to a parameters file in your repo; the parameters will be passed to the pipeline.
+    require: false
+  ENCODED_GOOGLE_APPLICATION_CREDENTIALS:
+    description: The base64 encoded google credentials
+    required: true
+  GOOGLE_APPLICATION_CREDENTIALS:
+    description: The path to the decoded google credentials
+    required: true
+  EXPERIMENT_NAME: 
+    description: The name of the experiment name within which the kubeflow experiment should run
+    required: false
+  PIPELINE_NAMESPACE: 
+    description: The namespace in which the pipeline should run
+    required: false
+  PIPELINE_ID: 
+    description: The ID of the pipeline to be triggered
+    required: true 
+  PIPELINE_ID: 
+    description: The ID of the version of the pipeline to be triggered. If not provided, the default version will run.
+    required: false 
+outputs:
+  WORKFLOW_URL:
+    description: URL that is a link to pipeline in Kubeflow
+branding:
+  color: 'purple'
+  icon: 'upload-cloud'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

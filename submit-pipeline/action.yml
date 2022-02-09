@@ -1,6 +1,5 @@
 name: Manage Kubeflow Pipelines on GCP. 
 description: Build, deploy and run a Kubeflow Pipeline on Google Cloud Platform.
-author: Niklas Hansson
 inputs:
   KUBEFLOW_URL:
     description: The endpoint where your Kubeflow UI is running. 
@@ -14,6 +13,9 @@ inputs:
   PIPELINE_FUNCTION_NAME:
     description: The name of the pipeline, this name will be the name of the pipeline in the Kubeflow UI.
     require: true
+  PIPELINE_PARAMETERS_PATH:
+    description: Path to a parameters file in your repo; the parameters will be passed to the pipeline.
+    require: false
   ENCODED_GOOGLE_APPLICATION_CREDENTIALS:
     description: The base64 encoded google credentials
     required: true
@@ -30,7 +32,7 @@ inputs:
     description: Should github action also trigger the pipeline
     required: false
   VERSION_GITHUB_SHA: 
-    description: Should github action also trigger the pipeline
+    description: If the pipeline containers are versioned with the github hash
     required: false
 outputs:
   WORKFLOW_URL:
