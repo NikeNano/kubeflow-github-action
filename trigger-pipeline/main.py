@@ -179,7 +179,8 @@ def main():
 
     logging.info("Started the process to run the pipeline on kubeflow.")
     pipeline_id = os.getenv("INPUT_PIPELINE_ID")
-    run_pipeline(pipeline_name=pipeline_name,
+    run_name = os.getenv("INPUT_RUN_NAME")
+    run_pipeline(pipeline_name=run_name,
                  pipeline_id=pipeline_id,
                  client=client,
                  pipeline_paramters_path=os.environ["INPUT_PIPELINE_PARAMETERS_PATH"])

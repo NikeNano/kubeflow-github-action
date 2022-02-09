@@ -25,6 +25,9 @@ inputs:
   PIPELINE_ID: 
     description: The ID of the version of the pipeline to be triggered. If not provided, the default version will run.
     required: true
+  RUN_NAME:
+    description: Name of the run (will be suffixed with datetime).
+    required: true
 outputs:
   WORKFLOW_URL:
     description: URL that is a link to pipeline in Kubeflow
