@@ -146,7 +146,6 @@ def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipel
         raise ValueError("Failed to find experiment with the name: {}".format(
             os.environ["INPUT_EXPERIMENT_NAME"]))
     logging.info(f"The expriment id is: {experiment_id}")
-    namespace = None
     # [TODO] What would be a good way to name the jobs
     job_name = pipeline_name + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     logging.info(f"The job name is: {job_name}")
@@ -163,8 +162,7 @@ def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipel
         job_name=job_name,
         # Read this as a yaml, people seam to prefer that to json.
         params=pipeline_params,
-        pipeline_id=pipeline_id,
-        namespace=namespace)
+        pipeline_id=pipeline_id)
     logging.info(
         "Successfully started the pipeline, head over to kubeflow to check it out")
 
