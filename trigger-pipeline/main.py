@@ -120,7 +120,7 @@ def find_experiment_id(experiment_name: str, namespace: str, client: kfp.Client,
         # If no next tooken break
         if not page_token:
             logging.info(
-                f"Could not find the pipeline id, is the experiment name: {experiments_name} correct? ")
+                f"Could not find the pipeline id, is the experiment name: {experiment_name} correct? ")
             break
 
 
