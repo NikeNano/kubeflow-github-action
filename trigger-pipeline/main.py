@@ -124,22 +124,22 @@ def find_experiment_id(experiment_name: str, namespace: str, client: kfp.Client,
             break
 
 
-def read_pipeline_params(pipeline_paramters_path: str) -> dict:
+def read_pipeline_params(pipeline_parameters_path: str) -> dict:
     # [TODO] add docstring here
     pipeline_params = {}
-    with open(pipeline_paramters_path) as f:
+    with open(pipeline_parameters_path) as f:
         try:
             pipeline_params = yaml.safe_load(f)
-            logging.info(f"The pipeline paramters is: {pipeline_params}")
+            logging.info(f"The pipeline parameters is: {pipeline_params}")
         except yaml.YAMLError as exc:
             logging.info("The yaml parameters could not be loaded correctly.")
             raise ValueError(
                 "The yaml parameters could not be loaded correctly.")
-        logging.info(f"The paramters are: {pipeline_params}")
+        logging.info(f"The parameters are: {pipeline_params}")
     return pipeline_params
 
 
-def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipeline_paramters_path: dict, namespace: str):
+def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipeline_parameters_path: str, namespace: str):
     experiment_id = find_experiment_id(
         experiment_name=os.environ["INPUT_EXPERIMENT_NAME"], client=client, namespace=namespace)
     if not experiment_id:
@@ -151,9 +151,7 @@ def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipel
     job_name = pipeline_name + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     logging.info(f"The job name is: {job_name}")
 
-    pipeline_params = read_pipeline_params(
-        pipeline_paramters_path=pipeline_paramters_path)
-    pipeline_params = pipeline_params if pipeline_params != None else {}
+    pipeline_params = read_pipeline_params(pipeline_parameters_path) if pipeline_parameters_path is not None else {}
     logging.info(
         f"experiment_id: {experiment_id}, job_name:{job_name}, pipeline_params:{pipeline_params}, pipeline_id:{pipeline_id}, namespace:{namespace}")
     client.run_pipeline(
@@ -184,7 +182,7 @@ def main():
     run_pipeline(pipeline_name=run_name,
                  pipeline_id=pipeline_id,
                  client=client,
-                 pipeline_paramters_path=os.environ["INPUT_PIPELINE_PARAMETERS_PATH"],
+                 pipeline_parameters_path=os.getenv("INPUT_PIPELINE_PARAMETERS_PATH"),
                  namespace=os.environ["INPUT_PIPELINE_NAMESPACE"])
 
 
