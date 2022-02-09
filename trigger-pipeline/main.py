@@ -111,10 +111,10 @@ def find_experiment_id(experiment_name: str, namespace: str, client: kfp.Client,
     while True:
         experiments = client.list_experiments(
             page_size=page_size, page_token=page_token, namespace=namespace)
-        for experiments in experiments.experiments:
-            if experiments.name == experiment_name:
+        for experiment in experiments.experiments:
+            if experiment.name == experiment_name:
                 logging.info("Succesfully collected the experiment id")
-                return experiments.id
+                return experiment.id
         # Start need to know where to do next itteration from
         page_token = experiments.next_page_token
         # If no next tooken break
