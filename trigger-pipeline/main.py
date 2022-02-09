@@ -98,7 +98,7 @@ def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str = 10
             break
 
 
-def find_experiment_id(experiment_name: str, client: kfp.Client, page_size: int = 100, page_token: str = "", namespace: str) -> str:
+def find_experiment_id(experiment_name: str, namespace: str, client: kfp.Client, page_size: int = 100, page_token: str = "") -> str:
     """Function to return the experiment id
 
     Arguments:
@@ -185,7 +185,7 @@ def main():
                  pipeline_id=pipeline_id,
                  client=client,
                  pipeline_paramters_path=os.environ["INPUT_PIPELINE_PARAMETERS_PATH"],
-                 namespace = os.environ["INPUT_PIPELINE_NAMESPACE"])
+                 namespace=os.environ["INPUT_PIPELINE_NAMESPACE"])
 
 
 if __name__ == "__main__":
