@@ -183,10 +183,16 @@ def main():
         host=os.environ['INPUT_KUBEFLOW_URL'],
         client_id=os.environ['INPUT_CLIENT_ID'],
     )
+
+    if os.getenv("INPUT_PIPELINE_PARAMETERS_PATH") and not str.isspace(os.getenv("INPUT_PIPELINE_PARAMETERS_PATH")):
+        pipeline_parameters_path = os.getenv("INPUT_PIPELINE_PARAMETERS_PATH")
+    else:
+        pipeline_parameters_path = None
+
     run_pipeline(pipeline_name=run_name,
                  pipeline_id=pipeline_id,
                  client=client,
-                 pipeline_parameters_path=os.getenv("INPUT_PIPELINE_PARAMETERS_PATH"),
+                 pipeline_parameters_path=pipeline_parameters_path,
                  namespace=os.environ["INPUT_PIPELINE_NAMESPACE"])
 
 
