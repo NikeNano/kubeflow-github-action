@@ -98,7 +98,7 @@ def find_pipeline_id(pipeline_name: str, client: kfp.Client, page_size: str = 10
             break
 
 
-def find_experiment_id(experiment_name: str, client: kfp.Client, page_size: int = 100, page_token: str = "") -> str:
+def find_experiment_id(experiment_name: str, client: kfp.Client, page_size: int = 100, page_token: str = "", namespace: str) -> str:
     """Function to return the experiment id
 
     Arguments:
@@ -110,7 +110,7 @@ def find_experiment_id(experiment_name: str, client: kfp.Client, page_size: int 
     """
     while True:
         experiments = client.list_experiments(
-            page_size=page_size, page_token=page_token)
+            page_size=page_size, page_token=page_token, namespace=namespace)
         for experiments in experiments.experiments:
             if experiments.name == experiment_name:
                 logging.info("Succesfully collected the experiment id")
@@ -139,17 +139,14 @@ def read_pipeline_params(pipeline_paramters_path: str) -> dict:
     return pipeline_params
 
 
-def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipeline_paramters_path: dict):
+def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipeline_paramters_path: dict, namespace: str):
     experiment_id = find_experiment_id(
-        experiment_name=os.environ["INPUT_EXPERIMENT_NAME"], client=client)
+        experiment_name=os.environ["INPUT_EXPERIMENT_NAME"], client=client, namespace=namespace)
     if not experiment_id:
         raise ValueError("Failed to find experiment with the name: {}".format(
             os.environ["INPUT_EXPERIMENT_NAME"]))
     logging.info(f"The expriment id is: {experiment_id}")
     namespace = None
-    if (os.getenv("INPUT_PIPELINE_NAMESPACE") != None) and (str.isspace(os.getenv("INPUT_PIPELINE_NAMESPACE")) == False) and os.getenv("INPUT_PIPELINE_NAMESPACE"):
-        namespace = os.environ["INPUT_PIPELINE_NAMESPACE"]
-        logging.info(f"The namespace that will be used is: {namespace}")
     # [TODO] What would be a good way to name the jobs
     job_name = pipeline_name + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     logging.info(f"The job name is: {job_name}")
@@ -187,7 +184,8 @@ def main():
     run_pipeline(pipeline_name=run_name,
                  pipeline_id=pipeline_id,
                  client=client,
-                 pipeline_paramters_path=os.environ["INPUT_PIPELINE_PARAMETERS_PATH"])
+                 pipeline_paramters_path=os.environ["INPUT_PIPELINE_PARAMETERS_PATH"],
+                 namespace = os.environ["INPUT_PIPELINE_NAMESPACE"])
 
 
 if __name__ == "__main__":

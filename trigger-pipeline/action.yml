@@ -21,7 +21,7 @@ inputs:
     required: false
   PIPELINE_NAMESPACE: 
     description: The namespace in which the pipeline should run
-    required: false
+    required: true
   PIPELINE_ID: 
     description: The ID of the version of the pipeline to be triggered. If not provided, the default version will run.
     required: true
