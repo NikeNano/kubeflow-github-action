@@ -2,7 +2,6 @@ import os
 import yaml
 import kfp
 import kfp.compiler as compiler
-import click
 import importlib.util
 import logging
 import sys
