@@ -174,8 +174,6 @@ def main():
     logging.info(
         "Started the process to compile and upload the pipeline to kubeflow.")
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
-    logging.info("The value of the VERSION_GITHUB_SHA is: {}".format(
-        os.environ["INPUT_VERSION_GITHUB_SHA"]))
     logging.info(os.getenv("INPUT_RUN_PIPELINE"))
     logging.info(os.environ["INPUT_EXPERIMENT_NAME"])
 
