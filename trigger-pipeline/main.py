@@ -181,8 +181,8 @@ def main():
     pipeline_id = os.getenv("INPUT_PIPELINE_ID")
     run_name = os.getenv("INPUT_RUN_NAME")
     client = kfp.Client(
-        host=kubeflow_url,
-        client_id=client_id,
+        host=os.environ['INPUT_KUBEFLOW_URL'],
+        client_id=os.environ['INPUT_CLIENT_ID'],
     )
     run_pipeline(pipeline_name=run_name,
                  pipeline_id=pipeline_id,
