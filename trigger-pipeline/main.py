@@ -151,7 +151,11 @@ def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipel
     job_name = pipeline_name + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     logging.info(f"The job name is: {job_name}")
 
-    pipeline_params = read_pipeline_params(pipeline_parameters_path) if pipeline_parameters_path is not None else {}
+    if pipeline_parameters_path is not None:
+        pipeline_params = read_pipeline_params(pipeline_parameters_path)
+    else:
+        pipeline_params = {}
+
     logging.info(
         f"experiment_id: {experiment_id}, job_name:{job_name}, pipeline_params:{pipeline_params}, pipeline_id:{pipeline_id}, namespace:{namespace}")
     client.run_pipeline(
