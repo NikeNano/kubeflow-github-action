@@ -163,5 +163,5 @@ def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipel
         params=pipeline_params,
         pipeline_id=pipeline_id)
     logging.info(
-        "Successfully started the pipeline, head over to kubeflow to check it out")
+        "Successfully started the pipeline, head over to kubeflow and check it out")
 
