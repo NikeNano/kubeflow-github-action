@@ -38,7 +38,8 @@ def main():
         run_pipeline(pipeline_name=pipeline_name,
                      pipeline_id=pipeline_id,
                      client=client,
-                     pipeline_parameters_path=pipeline_parameters_path)
+                     pipeline_parameters_path=pipeline_parameters_path,
+                     namespace=os.environ["INPUT_PIPELINE_NAMESPACE"])
 
 
 if __name__ == "__main__":
