@@ -45,7 +45,7 @@ def pipeline_compile(pipeline_function: object) -> str:
         str -- The name of the compiled kubeflow pipeline
     """
     pipeline_name_zip = pipeline_function.__name__ + ".zip"
-    compiler.Compiler().compile(pipeline_function, pipeline_name_zip)
+    compiler.Compiler(mode=kfp.dsl.PipelineExecutionMode.V2_COMPATIBLE).compile(pipeline_function, pipeline_name_zip)
     logging.info("The pipeline function is compiled.")
     return pipeline_name_zip
 
