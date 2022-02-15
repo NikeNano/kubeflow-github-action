@@ -41,7 +41,8 @@ def main():
                      experiment_name=os.getenv("INPUT_EXPERIMENT_NAME"),
                      client=client,
                      pipeline_parameters_path=pipeline_parameters_path,
-                     namespace=os.getenv("INPUT_PIPELINE_NAMESPACE"))
+                     namespace=os.getenv("INPUT_PIPELINE_NAMESPACE"),
+                     service_account=os.getenv("INPUT_PIPELINE_SERVICE_ACCOUNT"))
 
 
 if __name__ == "__main__":

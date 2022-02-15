@@ -28,6 +28,9 @@ inputs:
   RUN_NAME:
     description: Name of the run (will be suffixed with datetime).
     required: true
+  PIPELINE_SERVICE_ACCOUNT:
+    description: Specifies which Kubernetes service account this run uses
+    required: false
 outputs:
   WORKFLOW_URL:
     description: URL that is a link to pipeline in Kubeflow
