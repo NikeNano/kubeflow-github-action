@@ -8,24 +8,25 @@ def main():
     logging.info(
         "Started the process to compile and upload the pipeline to kubeflow.")
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.environ["INPUT_GOOGLE_APPLICATION_CREDENTIALS"]
-    pipeline_function = load_function(pipeline_function_name=os.environ['INPUT_PIPELINE_FUNCTION_NAME'],
-                                      full_path_to_pipeline=os.environ['INPUT_PIPELINE_CODE_PATH'])
+    pipeline_function = load_function(pipeline_function_name=os.getenv('INPUT_PIPELINE_FUNCTION_NAME'),
+                                      full_path_to_pipeline=os.getenv('INPUT_PIPELINE_CODE_PATH'))
     logging.info("The value of the VERSION_GITHUB_SHA is: {}".format(
-        os.environ["INPUT_VERSION_GITHUB_SHA"]))
-    if os.environ["INPUT_VERSION_GITHUB_SHA"] == "true":
+        os.getenv("INPUT_VERSION_GITHUB_SHA")))
+    if os.getenv("INPUT_VERSION_GITHUB_SHA") and os.getenv("INPUT_VERSION_GITHUB_SHA").lower() == "true":
         logging.info("Versioned pipeline components")
-        pipeline_function = pipeline_function(
-            github_sha=os.environ["GITHUB_SHA"])
-    pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function)
-    pipeline_name = os.environ['INPUT_PIPELINE_FUNCTION_NAME'] + \
-        "_" + os.environ["GITHUB_SHA"]
+        pipeline_function = pipeline_function(github_sha=os.getenv("GITHUB_SHA"))
+
+    v2_compatible = os.getenv("INPUT_V2_COMPATIBLE") and os.getenv("INPUT_V2_COMPATIBLE").lower() == "true"
+    pipeline_name_zip = pipeline_compile(pipeline_function=pipeline_function, v2_compatible=v2_compatible)
+    pipeline_name = os.getenv('INPUT_PIPELINE_FUNCTION_NAME') + \
+        "_" + os.getenv("GITHUB_SHA")
     client = upload_pipeline(pipeline_name_zip=pipeline_name_zip,
                              pipeline_name=pipeline_name,
-                             kubeflow_url=os.environ['INPUT_KUBEFLOW_URL'],
-                             client_id=os.environ["INPUT_CLIENT_ID"])
+                             kubeflow_url=os.getenv('INPUT_KUBEFLOW_URL'),
+                             client_id=os.getenv("INPUT_CLIENT_ID"))
     logging.info(os.getenv("INPUT_RUN_PIPELINE"))
-    logging.info(os.environ["INPUT_EXPERIMENT_NAME"])
-    if os.getenv("INPUT_RUN_PIPELINE") == "true" and os.environ["INPUT_EXPERIMENT_NAME"]:
+    logging.info(os.getenv("INPUT_EXPERIMENT_NAME"))
+    if os.getenv("INPUT_RUN_PIPELINE") and os.getenv("INPUT_RUN_PIPELINE").lower() == "true":
         logging.info("Started the process to run the pipeline on kubeflow.")
         pipeline_id = find_pipeline_id(pipeline_name=pipeline_name,
                                        client=client)
@@ -37,9 +38,10 @@ def main():
 
         run_pipeline(pipeline_name=pipeline_name,
                      pipeline_id=pipeline_id,
+                     experiment_name=os.getenv("INPUT_EXPERIMENT_NAME"),
                      client=client,
                      pipeline_parameters_path=pipeline_parameters_path,
-                     namespace=os.environ["INPUT_PIPELINE_NAMESPACE"])
+                     namespace=os.getenv("INPUT_PIPELINE_NAMESPACE"))
 
 
 if __name__ == "__main__":

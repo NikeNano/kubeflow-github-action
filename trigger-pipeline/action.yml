@@ -6,10 +6,10 @@ inputs:
     required: true
   CLIENT_ID:
     description: The IAP client id, which was specified when the kubeflow deployment where setup using IAP.
-    require: true
+    required: true
   PIPELINE_PARAMETERS_PATH:
     description: Path to a parameters file in your repo; the parameters will be passed to the pipeline.
-    require: false
+    required: false
   ENCODED_GOOGLE_APPLICATION_CREDENTIALS:
     description: The base64 encoded google credentials
     required: true

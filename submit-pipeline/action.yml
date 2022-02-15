@@ -6,16 +6,16 @@ inputs:
     required: true
   CLIENT_ID:
     description: The IAP client id, which was specified when the kubeflow deployment where setup using IAP.
-    require: true
+    required: true
   PIPELINE_CODE_PATH:
     description: The full path name including the filename of the python file that describes the pipeline you want to run on Kubeflow.  This should be relative to the root of the GitHub repository where the Action is triggered.
-    require: true
+    required: true
   PIPELINE_FUNCTION_NAME:
     description: The name of the pipeline, this name will be the name of the pipeline in the Kubeflow UI.
-    require: true
+    required: true
   PIPELINE_PARAMETERS_PATH:
     description: Path to a parameters file in your repo; the parameters will be passed to the pipeline.
-    require: false
+    required: false
   ENCODED_GOOGLE_APPLICATION_CREDENTIALS:
     description: The base64 encoded google credentials
     required: true
@@ -24,16 +24,20 @@ inputs:
     required: true
   EXPERIMENT_NAME: 
     description: The name of the experiment name within which the kubeflow experiment should run
-    required: false
+    required: true
   PIPELINE_NAMESPACE: 
     description: The namespace in which the pipeline should run
-    required: false
+    required: true
   RUN_PIPELINE: 
     description: Should github action also trigger the pipeline
     required: false
   VERSION_GITHUB_SHA: 
     description: If the pipeline containers are versioned with the github hash
     required: false
+  V2_COMPATIBLE:
+    description: If the pipeline should be compiled with KFP SDK v2 compatibility
+    required: false
+
 outputs:
   WORKFLOW_URL:
     description: URL that is a link to pipeline in Kubeflow

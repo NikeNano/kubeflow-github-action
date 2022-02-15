@@ -1,4 +1,3 @@
-import os
 import yaml
 import kfp
 import kfp.compiler as compiler
@@ -35,7 +34,7 @@ def load_function(pipeline_function_name: str, full_path_to_pipeline: str) -> ob
     return pipeline_func
 
 
-def pipeline_compile(pipeline_function: object) -> str:
+def pipeline_compile(pipeline_function: object, v2_compatible: bool = False) -> str:
     """Function to compile pipeline. The pipeline is compiled to a zip file. 
 
     Arguments:
@@ -45,7 +44,11 @@ def pipeline_compile(pipeline_function: object) -> str:
         str -- The name of the compiled kubeflow pipeline
     """
     pipeline_name_zip = pipeline_function.__name__ + ".zip"
-    compiler.Compiler(mode=kfp.dsl.PipelineExecutionMode.V2_COMPATIBLE).compile(pipeline_function, pipeline_name_zip)
+    if v2_compatible:
+        c = compiler.Compiler(mode=kfp.dsl.PipelineExecutionMode.V2_COMPATIBLE)
+    else:
+        c = compiler.Compiler()
+    c.compile(pipeline_function, pipeline_name_zip)
     logging.info("The pipeline function is compiled.")
     return pipeline_name_zip
 
@@ -138,12 +141,12 @@ def read_pipeline_params(pipeline_parameters_path: str) -> dict:
     return pipeline_params
 
 
-def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, pipeline_parameters_path: str, namespace: str):
+def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, experiment_name: str, pipeline_parameters_path: str, namespace: str):
     experiment_id = find_experiment_id(
-        experiment_name=os.environ["INPUT_EXPERIMENT_NAME"], client=client, namespace=namespace)
+        experiment_name=experiment_name, client=client, namespace=namespace)
     if not experiment_id:
         raise ValueError("Failed to find experiment with the name: {}".format(
-            os.environ["INPUT_EXPERIMENT_NAME"]))
+            experiment_name))
     logging.info(f"The expriment id is: {experiment_id}")
     # [TODO] What would be a good way to name the jobs
     job_name = pipeline_name + datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
