@@ -8,6 +8,7 @@ COPY . .
 
 RUN chmod +x /entrypoint.sh
 
-RUN  pip install -r requirements.txt
+RUN pip install -r requirements.txt
+RUN pip install kfp --upgrade
 
 ENTRYPOINT ["/entrypoint.sh"]

@@ -141,7 +141,7 @@ def read_pipeline_params(pipeline_parameters_path: str) -> dict:
     return pipeline_params
 
 
-def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, experiment_name: str, pipeline_parameters_path: str, namespace: str):
+def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, experiment_name: str, pipeline_parameters_path: str, namespace: str, service_account: str):
     experiment_id = find_experiment_id(
         experiment_name=experiment_name, client=client, namespace=namespace)
     if not experiment_id:
@@ -164,7 +164,8 @@ def run_pipeline(client: kfp.Client, pipeline_name: str, pipeline_id: str, exper
         job_name=job_name,
         # Read this as a yaml, people seam to prefer that to json.
         params=pipeline_params,
-        pipeline_id=pipeline_id)
+        pipeline_id=pipeline_id,
+        service_account=service_account)
     logging.info(
         "Successfully started the pipeline, head over to kubeflow and check it out")
 
