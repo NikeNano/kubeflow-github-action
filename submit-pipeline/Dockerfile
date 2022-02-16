@@ -1,4 +1,4 @@
-FROM python:3.7-stretch
+FROM python:3.10.2-bullseye
 
 LABEL "com.github.actions.name"="Submit Kubeflow Pipeline From GitHub"
 LABEL "com.github.actions.icon"="upload-cloud"
